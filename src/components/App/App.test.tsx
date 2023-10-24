@@ -1,4 +1,4 @@
-mport Root from '../../../Root';
+import Root from '../../../Root';
 import App from '../';
 
 import Shelf from '../../Shelf';
