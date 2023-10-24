@@ -1,27 +1,22 @@
-import Root from '../../../Root';
-import App from '../';
+import { renderWithThemeProvider } from 'utils/test/test-utils';
+import { ProductsProvider } from 'contexts/products-context';
+import { CartProvider } from 'contexts/cart-context';
 
-import Shelf from '../../Shelf';
-import FloatCart from '../../FloatCart';
+import App from '.';
 
-let wrapped;
+describe('[components] - App', () => {
+  const setup = () => {
+    return renderWithThemeProvider(
+      <ProductsProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </ProductsProvider>
+    );
+  };
 
-beforeEach(() => {
-  wrapped = mount(
-    <Root>
-      <App />
-    </Root>
-  );
-});
-
-afterEach(() => {
-  wrapped.unmount();
-});
-
-it('shows a shelf', () => {
-  expect(wrapped.find(Shelf).length).toEqual(1);
-});
-
-it('shows a floating cart', () => {
-  expect(wrapped.find(FloatCart).length).toEqual(1);
+  test('should render correctly', () => {
+    const view = setup();
+    expect(view).toMatchSnapshot();
+  });
 });
