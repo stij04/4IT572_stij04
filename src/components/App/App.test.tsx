@@ -9,7 +9,7 @@ describe('[components] - App', () => {
     return renderWithThemeProvider(
       <ProductsProvider>
         <CartProvider>
-           <App />
+          <App />
         </CartProvider>
       </ProductsProvider>
     );
