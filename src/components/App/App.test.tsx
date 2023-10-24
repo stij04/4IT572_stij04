@@ -7,11 +7,7 @@ import App from '.';
 describe('[components] - App', () => {
   const setup = () => {
     return renderWithThemeProvider(
-      <ProductsProvider>
-        <CartProvider>
           <App />
-        </CartProvider>
-      </ProductsProvider>
     );
   };
 
