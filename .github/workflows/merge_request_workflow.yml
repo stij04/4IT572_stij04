@@ -2,10 +2,20 @@ name: Merge request workflow
 
 on:
   workflow_dispatch:
-  merge_group:
+  pull_request:
+    types:
+      - closed
 
 jobs:
+  IfMerged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo The PR was merged
+
   Install:
+    needs: IfMerged
     runs-on: ubuntu-latest
 
     steps:
@@ -97,33 +107,22 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
 
     steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+
       - name: Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v2.6.1
         with:
           # Required, playbook filepath
-          playbook: ../ansible/ec2_deploy.yml
+          playbook: ec2_deploy.yml
           # Optional, directory where playbooks live
-          directory: ./
+          directory: ./.github/ansible/
           # Optional, SSH private key
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # Optional, literal inventory file contents
-          inventory: |
-            [all]
-            example.com
-
-            [group1]
-            example.com
           # Optional, SSH known hosts file content
           known_hosts: |
             example.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
           # Optional, encrypted vault password
           vault_password: ${{ secrets.VAULT_PASSWORD }}
-          # Optional, galaxy requirements filepath
-          requirements: galaxy-requirements.yml
-          # Optional, additional flags to pass to ansible-playbook
-          options: |
-            --inventory .hosts
-            --limit group1
-            --extra-vars hello=there
-            --verbose
-
