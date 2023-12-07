@@ -1,4 +1,4 @@
-name: Build and tests eshop
+name: Pull request workflow
 
 on:
   workflow_dispatch:
