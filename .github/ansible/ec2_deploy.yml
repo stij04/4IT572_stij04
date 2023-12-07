@@ -43,6 +43,7 @@
         name:
           - docker
           - git
+          - pip
         state: latest
         update_cache: yes
       become: yes
@@ -50,6 +51,9 @@
         name: docker
         state: started
         enabled: yes
+      become: yes
+    - name: Install Ansible and Boto
+      shell: pip3 install ansible boto boto3
       become: yes
     - name: Start Docker on startup
       shell: systemctl enable docker
