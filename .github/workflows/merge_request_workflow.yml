@@ -102,7 +102,7 @@ jobs:
           npm run test -- --colors
 
   Deploy:
-  # needs: [Build, Test]
+    needs: [Build, Test]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
 
@@ -127,9 +127,6 @@ jobs:
           SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
         uses: dawidd6/action-ansible-playbook@v2.6.1
         with:
-          # Required, playbook filepath
           playbook: ec2_deploy.yml
-          # Optional, directory where playbooks live
           directory: ./.github/ansible/
-          # Optional, SSH private key
           key: ${{ secrets.SSH_PRIVATE_KEY }}
