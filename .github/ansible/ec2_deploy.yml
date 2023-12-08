@@ -3,6 +3,21 @@
   connection: local
 
   tasks:
+    - name: Identify old EC2 instances
+      ec2_instance_info:
+        region: us-east-1
+        filters:
+          "tag:Name": ""
+          "instance-state-name": "running"
+      register: old_instances
+
+    - name: Terminate old EC2 instances
+      ec2_instance:
+        state: absent
+        instance_ids: "{{ old_instances.instances | map(attribute='instance_id') | list }}"
+        region: us-east-1
+      when: old_instances.instances | length > 0
+
     - name: Launch EC2 instance
       ec2_instance:
         instance_type: t2.medium
@@ -19,10 +34,6 @@
         aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
         security_token: "{{ lookup('env', 'SESSION_TOKEN') }}"
       register: ec2_instance_result
-
-    - name: Debug EC2 instance result
-      debug:
-        var: ec2_instance_result
 
     - name: Add instance host to group
       add_host:
