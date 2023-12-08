@@ -8,7 +8,7 @@
         region: us-east-1
         state: absent
         filters:
-          "tags:Name": "eshop"
+          "tag:Name": "eshop"
           "instance-state-name": "running"
         aws_access_key: "{{ lookup('env', 'ACCESS_KEY') }}"
         aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
