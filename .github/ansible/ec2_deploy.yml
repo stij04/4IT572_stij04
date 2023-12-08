@@ -9,6 +9,9 @@
         state: absent
         filters:
           "instance-state-name": "running"
+        aws_access_key: "{{ lookup('env', 'ACCESS_KEY') }}"
+        aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
+        security_token: "{{ lookup('env', 'SESSION_TOKEN') }}"
 
     - name: Launch EC2 instance
       ec2_instance:
