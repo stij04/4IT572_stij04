@@ -121,6 +121,10 @@ jobs:
         run: pip3 install ansible boto boto3
 
       - name: Run Ansible playbook
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
         uses: dawidd6/action-ansible-playbook@v2.6.1
         with:
           # Required, playbook filepath
