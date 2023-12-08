@@ -24,15 +24,12 @@
       debug:
         var: ec2_instance_result
 
-    - name: Pause for 2 minutes to initialize new instance
-      ansible.builtin.pause:
-        minutes: 2
-
     - name: Add instance host to group
       add_host:
-        hostname: "{{ item.public_ip_address }}"
+        hostname: "{{ item.network_interfaces[0].association.public_ip }}"
         groupname: launched
       loop: "{{ ec2_instance_result.instances }}"
+      when: "'association' in item.network_interfaces[0]"
 
     - name: Wait for SSH connection
       delegate_to: "{{ item.public_dns_name }}"
