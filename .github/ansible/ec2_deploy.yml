@@ -8,7 +8,7 @@
         region: us-east-1
         state: absent
         filters:
-          "tag:Name": "eshop"
+          "tag:DevOps": "eshop"
           "instance-state-name": "running"
         aws_access_key: "{{ lookup('env', 'ACCESS_KEY') }}"
         aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
@@ -28,6 +28,7 @@
         security_group: eshop
         tags:
           Name: eshop
+          DevOps: eshop
         aws_access_key: "{{ lookup('env', 'ACCESS_KEY') }}"
         aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
         security_token: "{{ lookup('env', 'SESSION_TOKEN') }}"
