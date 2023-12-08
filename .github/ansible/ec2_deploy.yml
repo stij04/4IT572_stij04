@@ -26,10 +26,8 @@
         wait: yes
         count: 1
         security_group: eshop
-        tag_specifications:
-          - resource_type: instance
-            tags:
-              Name: eshop
+        tags:
+          Name: eshop
         aws_access_key: "{{ lookup('env', 'ACCESS_KEY') }}"
         aws_secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
         security_token: "{{ lookup('env', 'SESSION_TOKEN') }}"
