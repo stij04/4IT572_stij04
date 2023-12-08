@@ -5,6 +5,7 @@
   tasks:
     - name: Terminate old EC2 instances
       ec2_instance:
+        region: us-east-1
         state: absent
         filters:
           "instance-state-name": "running"
