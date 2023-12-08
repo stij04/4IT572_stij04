@@ -20,6 +20,10 @@
         security_token: "{{ lookup('env', 'SESSION_TOKEN') }}"
       register: ec2_instance_result
 
+    - name: Debug EC2 instance result
+      debug:
+        var: ec2_instance_result
+
     - name: Add instance host to group
       add_host:
         hostname: "{{ item.public_ip_address }}"
