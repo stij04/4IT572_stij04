@@ -71,12 +71,12 @@
     - name: Build an image and push it to a private repo
       docker_image:
         build:
-          path: .
-          dockerfile: apps/Dockerfile
+          path: ./app
+          dockerfile: Dockerfile
         name: myeshop
         tag: latest
         source: build
-       #become: yes
+      become: yes
     - name: Run Docker with eshop
       shell: docker container run -p 80:3000 myeshop
       async: 45
